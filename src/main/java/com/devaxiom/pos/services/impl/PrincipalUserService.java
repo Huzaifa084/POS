@@ -1,10 +1,9 @@
 package com.devaxiom.pos.services.impl;
 
-
-import com.devaxiom.briefcase.enums.Role;
-import com.devaxiom.briefcase.exceptions.ResourceNotFoundException;
-import com.devaxiom.briefcase.model.Users;
-import com.devaxiom.briefcase.repositories.UsersRepository;
+import com.devaxiom.pos.enums.Role;
+import com.devaxiom.pos.exceptions.ResourceNotFoundException;
+import com.devaxiom.pos.model.Users;
+import com.devaxiom.pos.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +34,6 @@ public class PrincipalUserService {
     }
 
     public boolean isAdmin() {
-        return this.getLoggedInUser().getRole() == Role.admin;
+        return this.getLoggedInUser().getRole() == Role.ADMIN;
     }
 }

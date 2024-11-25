@@ -1,4 +1,4 @@
-package com.devaxiom.pos.emial;
+package com.devaxiom.pos.email;
 
 import com.devaxiom.pos.exceptions.EmailException;
 import jakarta.mail.internet.MimeMessage;

@@ -1,8 +1,7 @@
 package com.devaxiom.pos.services.impl;
 
-
-import com.devaxiom.briefcase.model.Users;
-import com.devaxiom.briefcase.repositories.UsersRepository;
+import com.devaxiom.pos.model.Users;
+import com.devaxiom.pos.repositories.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -27,6 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("User Password: {}", users.getPassword());
         log.info("User Role: {}", users.getAuthorities());
         return new User(users.getEmail(), users.getPassword(), users.getAuthorities());
+//        return users;
     }
 
     public UserDetails loadUserById(Long userId) {

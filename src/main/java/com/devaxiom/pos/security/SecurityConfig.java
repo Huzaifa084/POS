@@ -3,6 +3,7 @@ package com.devaxiom.pos.security;
 import com.devaxiom.pos.services.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,7 @@ import java.util.List;
 @Slf4j
 public class SecurityConfig {
     private final JwtFilter jwtFilter;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -80,7 +82,7 @@ public class SecurityConfig {
         log.info("Setting up DaoAuthenticationProvider with BCryptPasswordEncoder");
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(this.getUserDetailsService());
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 

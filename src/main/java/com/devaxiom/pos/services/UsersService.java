@@ -23,13 +23,9 @@ public interface UsersService {
 
     Users findUserProfile(String jwt) throws UserException;
 
-    Object createProfile(Users user, CreateProfileDto updateUserRequestDto) throws UserException;
-
     List<Users> searchUser(String query);
 
     Optional<Users> findUserOptionalByEmail(String email);
-
-    Object getUserProfile(Users user);
 
     String uploadProfilePic(MultipartFile file, String uploadDir) throws IOException;
 }

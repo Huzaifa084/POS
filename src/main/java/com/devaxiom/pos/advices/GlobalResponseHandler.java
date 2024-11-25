@@ -33,15 +33,11 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         if (requestURI.startsWith("/v3/api-docs") ||
                 requestURI.startsWith("/swagger-ui") ||
                 requestURI.startsWith("/webjars") ||
-                requestURI.startsWith("/get-image") ||
-                requestURI.startsWith("/ws/**") ||
-                requestURI.startsWith("/chat") ||
-                requestURI.contains("/ws")
+                requestURI.startsWith("/get-image")
         ) {
             return body;
         }
 
-        // Otherwise, wrap the response body in ApiResponse
         return new ApiResponse<>(body, "Operation successful");
     }
 }

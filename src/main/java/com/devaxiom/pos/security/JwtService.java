@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-//public class JWTService implements CommandLineRunner {
 public class JwtService {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
@@ -32,21 +32,24 @@ public class JwtService {
     private final TokenBlacklistService tokenBlacklistService;
 
     @Value("${jwt.expiry}")
-    private long jwtExpiry;
+    private String jwtExpiry;
 
 //    @Value("${jwt.secret-key}")
 //    private String jwtSecretKey;
 
-    public JwtService(TokenBlacklistService tokenBlacklistService) throws NoSuchAlgorithmException {
+    public JwtService(TokenBlacklistService tokenBlacklistService) {
         this.tokenBlacklistService = tokenBlacklistService;
+        try {
+            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA512");
+            SecretKey secretKey = keyGen.generateKey();
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA512");
-        SecretKey secretKey = keyGen.generateKey();
-
-        this.jwtSecretKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        System.out.println("JWT Secret Key: " + jwtSecretKey);
-        this.refreshSecretKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        System.out.println("Refresh Secret Key: " + refreshSecretKey);
+            this.jwtSecretKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+            System.out.println("JWT Secret Key: " + jwtSecretKey);
+            this.refreshSecretKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+            System.out.println("Refresh Secret Key: " + refreshSecretKey);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Failed to initialize JwtService due to missing algorithm", e);
+        }
     }
 
     public String generateRefreshToken(String userEmail) {
@@ -179,15 +182,4 @@ public class JwtService {
         logger.debug("Generating password reset token for user: {}", user.getEmail());
         return generateJwtToken(user);
     }
-
-//    @Override
-//    public void run(String... args) {
-//        logger.info("JWT Service started.");
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("name", "John Doe");
-//        map.put("email", "123456543@gmail.com");
-//        map.put("role", "ADMIN");
-//        map.put("phone", "1234567890");
-//        System.out.println(generateJwtToken("1234rtygfdsasdfgbh@gmail.com","ADMIN"));
-//    }
 }

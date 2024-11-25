@@ -127,18 +127,18 @@ public class GlobalExceptionHandler {
         return buildErrorResponseEntity(apiError);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<?>> handleException(Exception ex) {
-        log.error("Unexpected error occurred: {}", ex.getMessage(), ex);
-
-        ApiError apiError = ApiError.builder()
-                .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-                .message("An unexpected error occurred: " + ex.getMessage())
-                .subErrors(List.of("Check server logs for more details"))
-                .build();
-
-        return new ResponseEntity<>(new ApiResponse<>(apiError), apiError.getErrorStatus());
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ApiResponse<?>> handleException(Exception ex) {
+//        log.error("Unexpected error occurred: {}", ex.getMessage(), ex);
+//
+//        ApiError apiError = ApiError.builder()
+//                .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .message("An unexpected error occurred: " + ex.getMessage())
+//                .subErrors(List.of("Check server logs for more details"))
+//                .build();
+//
+//        return new ResponseEntity<>(new ApiResponse<>(apiError), apiError.getErrorStatus());
+//    }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ApiResponse<?>> handleMissingRequestParameter(MissingServletRequestParameterException exception) {

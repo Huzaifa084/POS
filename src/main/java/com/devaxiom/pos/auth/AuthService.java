@@ -1,6 +1,6 @@
 package com.devaxiom.pos.auth;
 
-import com.devaxiom.pos.emial.OtpEmailService;
+import com.devaxiom.pos.email.OtpEmailService;
 import com.devaxiom.pos.enums.Role;
 import com.devaxiom.pos.exceptions.*;
 import com.devaxiom.pos.model.Users;
